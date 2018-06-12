@@ -11,7 +11,7 @@ public class HHCollector {
     // Constants
     private static final boolean debug   = false;   // Debug mode
     private static final int curPage     = 2;       // Current page Adventures start on
-    private static final int numGirls    = 48;      // Tells us how many girls are in the harem
+    private static final int numGirls    = 49;      // Tells us how many girls are in the harem
     private static final int maxFights   = 500;     // In case we want to limit how many fights we fight
     private static final int cycleBuffer = 62200;   // Sleep time between cycles (in milliseconds)
     
