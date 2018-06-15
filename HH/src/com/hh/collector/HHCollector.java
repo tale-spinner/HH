@@ -45,7 +45,7 @@ public class HHCollector {
             
             // Fight something occasionally
             if( ++fightCnt > maxFights ) { msg("Max fight count reached. Pacifism engaged."); continue; }
-            FightGruntt();
+            FightFinalmecia();
         }
     }
     
@@ -113,17 +113,17 @@ public class HHCollector {
     
     public static void FightSilvanus() {
         msg("Fight Silvanus!",true);
-        Battle( 2950, 650, 2 );
+        Battle( 2480, 685, 2 );
     }
     
     public static void FightBremen() {
         msg("Fight Bremen!",true);
-        Battle( 3280, 230, 2 );
+        Battle( 2530, 320, 2 );
     }
     
     public static void FightFinalmecia() {
         msg("Fight Finalmecia!",true);
-        Battle( 3590, 230, 2 );
+        Battle( 3100, 230, 2 );
     }
     
     // Overload Battle for backwards compatibility
