@@ -45,11 +45,20 @@ public class HHCollector {
             
             // Fight something occasionally
             if( ++fightCnt > maxFights ) { msg("Max fight count reached. Pacifism engaged."); continue; }
-            FightFinalmecia();
+            FightSilvanus();
         }
     }
     
     public static void GoToTown() {
+        // Clear occasional goof up screen
+        klick( 1950, 450 );
+        try { Thread.sleep(150); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        klick( 1950, 451 );
+        try { Thread.sleep(150); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        klick( 1950, 452 );
+        try { Thread.sleep(150); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // Go home screen / town
         klick( 2220, 40 );
         try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         klick( 2220, 40 );
