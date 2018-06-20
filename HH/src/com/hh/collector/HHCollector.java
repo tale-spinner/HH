@@ -45,7 +45,7 @@ public class HHCollector {
             
             // Fight something occasionally
             if( ++fightCnt > maxFights ) { msg("Max fight count reached. Pacifism engaged."); continue; }
-            FightSilvanus();
+            FightGruntt();
         }
     }
     
@@ -80,14 +80,18 @@ public class HHCollector {
         try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         klick( 3575, 650 );
         try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-
+        
+        // Scroll to the top
+        klick( topPosX, topPosY );
+        scrollUp(150);
+        
         // Scroll through the girls and collect money
-        for( int o=1; o<=Math.ceil(numGirls/3); o++ ) {
+        for( int o=1; o<=Math.ceil(numGirls/4); o++ ) {
             for( int i=0; i<=20; i++ ) {
                 klick( topPosX, topPosY + (i * 25) );
                 try { Thread.sleep(100); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
             }
-            scroll(3);
+            scrollDown(3);
             try { Thread.sleep(300); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         }
     }
@@ -169,7 +173,7 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Battle!
-        klick( 2850, 830 );
+        klick( 2760, 850 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Skip
@@ -177,7 +181,7 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Ok
-        klick( 2850, 620 );
+        klick( 2875, 620 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
     
@@ -216,10 +220,17 @@ public class HHCollector {
         }
     }
     
-    public static void scroll ( int amt ) {
+    public static void scrollDown ( int amt ) {
         for( int i=0; i<amt; i++ ) {
             robot.mouseWheel( 1 );
-            robot.delay(100);
+            robot.delay(50);
+        }
+    }
+    
+    public static void scrollUp ( int amt ) {
+        for( int i=0; i<amt; i++ ) {
+            robot.mouseWheel( -1 );
+            robot.delay(50);
         }
     }
     
