@@ -29,7 +29,6 @@ public class HHCollector {
             e.printStackTrace();
         }
         
-        
         // Main loop
         int fightCnt  = 0;
         for( int o=1; o<=500; o++){
@@ -45,7 +44,7 @@ public class HHCollector {
             
             // Fight something occasionally
             if( ++fightCnt > maxFights ) { msg("Max fight count reached. Pacifism engaged."); continue; }
-            FightGruntt();
+            FightDarkLord();
         }
     }
     
@@ -183,6 +182,11 @@ public class HHCollector {
         // Ok
         klick( 2875, 620 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // Click button for any girls we won
+        klick( 3017, 725 );
+        try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
     }
     
     
