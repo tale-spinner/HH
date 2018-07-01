@@ -9,11 +9,9 @@ import java.awt.event.MouseEvent;
 
 public class HHCollector {
     // Constants
-    private static final boolean debug   = false;   // Debug mode
-    private static final int curPage     = 2;       // Current page Adventures start on
-    private static final int numGirls    = 53;      // Tells us how many girls are in the harem
-    private static final int maxFights   = 500;     // In case we want to limit how many fights we fight
-    private static final int cycleBuffer = 62200;   // Sleep time between cycles (in milliseconds)
+    private static final boolean  DEBUG      =  false;   // Debug mode
+    private static final int      CURR_PAGE  =  2;       // Current page Adventures start on
+    private static final int      NUM_GIRLS  =  53;      // Tells us how many girls are in the harem
     
     // Globals
     private static Robot robot = null;
@@ -29,28 +27,37 @@ public class HHCollector {
             e.printStackTrace();
         }
         
+        // Initialize date/time vars
+        Date curDTTM = new Date();
+        Date clearHaremDTTM = curDTTM;
+        Date battleVillDTTM = DateAddMins(30,curDTTM);
+        Date clearArenaDTTM = DateAddMins(30,curDTTM);
         
-        // Main loop
-        int fightCnt  = 0;
-        for( int o=1; o<=500; o++){
         
-            // Clear out harem every <cycleBuffer> seconds
-            for(int i=1; i<=12; i++){
-                msg("Cycle " + o + '-' + i, true );
-                
+        // Main cycle
+        while(true) {
+            // Reset current date/time
+            curDTTM = new Date();
+            
+            // Clear harem when current date/time is after clearHaremDTTM
+            if ( curDTTM.after(clearHaremDTTM) ) {
                 ClearHarem();
-                
-                try { Thread.sleep(cycleBuffer); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                clearHaremDTTM = DateAddMins(3,curDTTM);
             }
-            
-            // Fight something if we haven't hit the max fight count
-            if( ++fightCnt <= maxFights ) {
+
+            // Battle the villain when current date/time is after battleVillDTTM
+            if ( curDTTM.after(battleVillDTTM) ) {
                 FightSilvanus();
+                battleVillDTTM = DateAddMins(30,curDTTM);
             }
-            else { msg("Max fight count reached. Pacifism engaged."); }
+
+            // Clear the arena when current date/time is after clearArenaDTTM
+            if ( curDTTM.after(clearArenaDTTM) ) {
+                ClearArena();
+                clearArenaDTTM = DateAddMins(30);
+            }
             
-            // Fight all opponents in the arena
-            ClearArena();
+            delay(1);  // Wait a second so we're not just cycling a thousand times a second or something.
         }
     }
     
@@ -77,6 +84,8 @@ public class HHCollector {
         final int topPosX    = 2500;
         final int topPosY    = 245;  // lowest Y of harem is 765
         
+        msg( "Clearing Harem", true );
+        
         // Reset our location
         GoToTown();
 
@@ -91,7 +100,7 @@ public class HHCollector {
         scrollUp(150);
         
         // Scroll through the girls and collect money
-        for( int o=1; o<=Math.ceil(numGirls/4); o++ ) {
+        for( int o=1; o<=Math.ceil(NUM_GIRLS/4); o++ ) {
             for( int i=0; i<=20; i++ ) {
                 klick( topPosX, topPosY + (i * 25) );
                 try { Thread.sleep(100); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
@@ -146,7 +155,7 @@ public class HHCollector {
     
     // Overload Battle for backwards compatibility
     public static void BattleVillain( int a, int b ) {
-        BattleVillain(a,b,curPage);
+        BattleVillain(a,b,CURR_PAGE);
     }
     
     
@@ -158,13 +167,13 @@ public class HHCollector {
         klick( 2800, 400 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
-        if ( page > curPage ) { 
+        if ( page > CURR_PAGE ) { 
             msg("WAIT!!!!  I can't do that!!!!" );
             return;
         }
         
         // If we need to go to a previous page of the map
-        if( page < curPage ) {
+        if( page < CURR_PAGE ) {
             klick( 2140, 475 );
             try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         }
@@ -253,21 +262,34 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
     
-    
-    public static void delay( int s ) {
-        try { Thread.sleep(s); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    // Return a date/time <min> minutes after aDTTM
+    public static Date DateAddMins( int min, Date aDTTM ) {
+        final long ONE_MINUTE_IN_MILLIS = 60000;
+        return new Date( aDTTM.getTime() + (min * ONE_MINUTE_IN_MILLIS));
+    }
+
+    // Return a date/time <min> minutes after current time
+    public static Date DateAddMins( int min ) {
+        return DateAddMins( min, new Date() );
     }
     
+    // Wait for <seconds> seconds
+    public static void delay( int seconds ) {
+        try { Thread.sleep(seconds*1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    }
+    
+    // Point mouse at x,y coordinates
     public static void pointAt( int x, int y ) {
         robot.mouseMove(x, y);
         robot.delay(100);
     }
     
+    // Click mouse at x,y coordinates
     public static void klick ( int x, int y ) {
         robot.mouseMove(x, y);
         robot.delay(100);
         
-        if(!debug) {
+        if(!DEBUG) {
             robot.mousePress(MouseEvent.BUTTON1_MASK);
             robot.mouseRelease(MouseEvent.BUTTON1_MASK);
         }
@@ -277,7 +299,7 @@ public class HHCollector {
         robot.mouseMove( startX, startY );
         robot.delay(100);
         
-        if(!debug) {
+        if(!DEBUG) {
             robot.mousePress(MouseEvent.BUTTON1_MASK);
             robot.delay(100);
             
