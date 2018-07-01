@@ -11,7 +11,7 @@ public class HHCollector {
     // Constants
     private static final boolean debug   = false;   // Debug mode
     private static final int curPage     = 2;       // Current page Adventures start on
-    private static final int numGirls    = 49;      // Tells us how many girls are in the harem
+    private static final int numGirls    = 53;      // Tells us how many girls are in the harem
     private static final int maxFights   = 500;     // In case we want to limit how many fights we fight
     private static final int cycleBuffer = 62200;   // Sleep time between cycles (in milliseconds)
     
@@ -29,6 +29,7 @@ public class HHCollector {
             e.printStackTrace();
         }
         
+        
         // Main loop
         int fightCnt  = 0;
         for( int o=1; o<=500; o++){
@@ -42,9 +43,14 @@ public class HHCollector {
                 try { Thread.sleep(cycleBuffer); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
             }
             
-            // Fight something occasionally
-            if( ++fightCnt > maxFights ) { msg("Max fight count reached. Pacifism engaged."); continue; }
-            FightDarkLord();
+            // Fight something if we haven't hit the max fight count
+            if( ++fightCnt <= maxFights ) {
+                FightSilvanus();
+            }
+            else { msg("Max fight count reached. Pacifism engaged."); }
+            
+            // Fight all opponents in the arena
+            ClearArena();
         }
     }
     
@@ -98,53 +104,53 @@ public class HHCollector {
     
     public static void FightDarkLord() {
         msg("Fighting Dark Lord!",true);
-        Battle( 2400, 650, 1 );
+        BattleVillain( 2400, 650, 1 );
     }
 
     
     public static void FightNinjaSpy() {
         msg("Fighting Ninja Spy!",true);
-        Battle( 2830, 680, 1 );
+        BattleVillain( 2830, 680, 1 );
     }
     
     public static void FightGruntt() {
         msg("Fighting Gruntt!",true);
-        Battle( 2920, 220, 1 );
+        BattleVillain( 2920, 220, 1 );
     }
     
     public static void FightEdwarda() {
         msg("Fighting Edwarda!",true);
-        Battle( 3435, 380, 1 );
+        BattleVillain( 3435, 380, 1 );
     }
 
     
     public static void FightDonatien() {
         msg("Fighting Donatien!",true);
-        Battle( 3250, 700, 1 );
+        BattleVillain( 3250, 700, 1 );
     }
     
     public static void FightSilvanus() {
         msg("Fight Silvanus!",true);
-        Battle( 2480, 685, 2 );
+        BattleVillain( 2480, 685, 2 );
     }
     
     public static void FightBremen() {
         msg("Fight Bremen!",true);
-        Battle( 2530, 320, 2 );
+        BattleVillain( 2530, 320, 2 );
     }
     
     public static void FightFinalmecia() {
         msg("Fight Finalmecia!",true);
-        Battle( 3100, 230, 2 );
+        BattleVillain( 3100, 230, 2 );
     }
     
     // Overload Battle for backwards compatibility
-    public static void Battle( int a, int b ) {
-        Battle(a,b,curPage);
+    public static void BattleVillain( int a, int b ) {
+        BattleVillain(a,b,curPage);
     }
     
     
-    public static void Battle( int locX, int locY, int page ) {
+    public static void BattleVillain( int locX, int locY, int page ) {
         
         GoToTown();
         
@@ -187,6 +193,64 @@ public class HHCollector {
         klick( 3017, 725 );
         try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
+    }
+    
+    public static void ClearArena() {
+        msg("Clearing Arena!",true);
+        
+        // Reset our location to town
+        GoToTown();
+        
+        // Go to Arena
+        klick( 2390, 670 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // Battle each of our opponents
+        BattleArena(1);
+        BattleArena(2);
+        BattleArena(3);
+    }
+    
+    
+    public static void BattleArena( int a ) {
+        
+        // Choose our opponent
+        if( a == 1 ) {
+            // Opponent 1
+            klick( 2825, 550 );
+            try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        }
+        else if ( a == 2 ) {
+            // Opponent 2
+            klick( 3150, 550 );
+            try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        }
+        else if ( a == 3 ) {
+            // Opponent 3
+            klick( 3475, 550 );
+            try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        }
+        
+
+        // Battle!
+        klick( 2760, 850 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // Skip
+        klick( 2875, 830 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // In case we lose
+        klick( 2880, 670 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // In case we win
+        klick( 2875, 830 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
+        // In case we got a prize
+        klick( 2880, 620 );
+        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
     
     
