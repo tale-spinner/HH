@@ -153,6 +153,11 @@ public class HHCollector {
         BattleVillain( 3100, 230, 2 );
     }
     
+    public static void FightRokoSensei() {
+        msg("Fight Roko Senseï!",true);
+        BattleVillain( 3170, 770, 2 );
+    }
+    
     // Overload Battle for backwards compatibility
     public static void BattleVillain( int a, int b ) {
         BattleVillain(a,b,CURR_PAGE);
