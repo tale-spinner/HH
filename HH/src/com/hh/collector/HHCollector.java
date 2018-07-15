@@ -11,7 +11,7 @@ public class HHCollector {
     // Constants
     private static final boolean  DEBUG      =  false;   // Debug mode
     private static final int      CURR_PAGE  =  2;       // Current page Adventures start on
-    private static final int      NUM_GIRLS  =  53;      // Tells us how many girls are in the harem
+    private static final int      NUM_GIRLS  =  57;      // Tells us how many girls are in the harem
     
     // Globals
     private static Robot robot = null;
@@ -156,11 +156,6 @@ public class HHCollector {
     public static void FightRokoSensei() {
         msg("Fight Roko Senseï!",true);
         BattleVillain( 3170, 770, 2 );
-    }
-    
-    // Overload Battle for backwards compatibility
-    public static void BattleVillain( int a, int b ) {
-        BattleVillain(a,b,CURR_PAGE);
     }
     
     
