@@ -11,7 +11,7 @@ public class HHCollector {
     // Constants
     private static final boolean  DEBUG      =  false;   // Debug mode
     private static final int      CURR_PAGE  =  2;       // Current page Adventures start on
-    private static final int      NUM_GIRLS  =  72;      // Tells us how many girls are in the harem
+    private static final int      NUM_GIRLS  =  81;      // Tells us how many girls are in the harem
     
     // Globals
     private static Robot robot = null;
@@ -47,7 +47,7 @@ public class HHCollector {
 
             // Battle the villain when current date/time is after battleVillDTTM
             if ( curDTTM.after(battleVillDTTM) ) {
-                FightFinalmecia();
+                FightRokoSensei();
                 battleVillDTTM = DateAddMins(30,curDTTM);
             }
 
