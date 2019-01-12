@@ -11,7 +11,7 @@ public class HHCollector {
     // Constants
     private static final boolean  DEBUG      =  false;   // Debug mode
     private static final int      CURR_PAGE  =  2;       // Current page Adventures start on
-    private static final int      NUM_GIRLS  =  81;      // Tells us how many girls are in the harem
+    private static final int      NUM_GIRLS  =  93;      // Tells us how many girls are in the harem
     
     // Globals
     private static Robot robot = null;
@@ -30,8 +30,8 @@ public class HHCollector {
         // Initialize date/time vars
         Date curDTTM = new Date();
         Date clearHaremDTTM = curDTTM;
-        Date battleVillDTTM = DateAddMins(30,curDTTM);
-        Date clearArenaDTTM = DateAddMins(30,curDTTM);
+        Date battleVillDTTM = DateAddMins(9,curDTTM);
+        Date clearArenaDTTM = DateAddMins(0,curDTTM);
         
         
         // Main cycle
@@ -47,7 +47,7 @@ public class HHCollector {
 
             // Battle the villain when current date/time is after battleVillDTTM
             if ( curDTTM.after(battleVillDTTM) ) {
-                FightRokoSensei();
+                FightKarole();
                 battleVillDTTM = DateAddMins(30,curDTTM);
             }
 
@@ -71,11 +71,11 @@ public class HHCollector {
         try { Thread.sleep(150); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Go home screen / town
-        klick( 2220, 40 );
+        klick( 2120, 40 );
         try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        klick( 2220, 40 );
+        klick( 2120, 40 );
         try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        klick( 2220, 40 );
+        klick( 2120, 40 );
         try { Thread.sleep(4000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
     
@@ -90,9 +90,9 @@ public class HHCollector {
         GoToTown();
 
         // Go to Harem from Town
-        klick( 3575, 650 );
+        klick( 3550, 580 );
         try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        klick( 3575, 650 );
+        klick( 3550, 580 );
         try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Scroll to the top
@@ -158,6 +158,10 @@ public class HHCollector {
         BattleVillain( 3170, 770, 2 );
     }
     
+    public static void FightKarole() {
+        msg("Fight Karole!",true);
+        BattleVillain( 3537, 230, 2 );
+    }
     
     public static void BattleVillain( int locX, int locY, int page ) {
         
@@ -187,7 +191,7 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Battle!
-        klick( 2760, 850 );
+        klick( 2730, 850 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Skip
@@ -195,7 +199,7 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Ok
-        klick( 2875, 620 );
+        klick( 2875, 860 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // Click button for any girls we won
@@ -254,7 +258,7 @@ public class HHCollector {
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // In case we win
-        klick( 2875, 830 );
+        klick( 2875, 860 );
         try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         
         // In case we got a prize
